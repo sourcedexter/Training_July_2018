@@ -38,7 +38,33 @@ def add_employee_details(employee_id, employee_name, employee_team):
         employee_obj.save()
 
 
+def add_laptop(laptop_id, ram, gpu, os, company, storage):
+    
+    
+    """
+    adds laptop details to the Laptop table
+    
+    """
+    try:
+        
+        lap_details=Laptop.create(laptop_id=laptop_id, ram=ram, gpu=gpu, os=os, company=company, storage=storage)
+        lap_details.save()
+    except:
+        print("laptop already exists")
+        
 
 
-
-
+def del_laptop(laptop_id):
+    
+    
+    """
+    deletes laptop by laptop id
+    
+    """
+    try:
+        
+       del_laptop=Laptop.get(Laptop.laptop_id==laptop_id)
+       del_laptop.delete_instance()
+    
+    except:
+        print("laptop doesnot exist")
