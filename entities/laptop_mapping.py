@@ -14,7 +14,7 @@ class Laptop_mapping:
     issue_date = DateTimeField(null=True)
     status_id = ForeignKeyField(Laptop_Status, related_name='status', null=True)
 
-    
+
     class Meta:
         database = db
 
