@@ -2,12 +2,12 @@ import os
 from peewee import *
 from playhouse.db_url import connect
 
-import properties	
+from properties import *
 
 db=_mysql.connect(db_host,db_user,db_password,db_name)
 
 class Employee(Model):
-	employee_id = PrimaryKeyField(null=False)
+	employee_id = PrimaryKeyField(primary_key=True)
 	employee_name = CharField(null=False)
 	employee_team = CharField(null=False)
     class Meta:
