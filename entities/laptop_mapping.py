@@ -1,16 +1,20 @@
-import os
 from peewee import *
-from playhouse.db_url import connect
 from properties import *
+from employee import Employee
+from laptop import Laptop
+from laptop_status import Laptop_Status
+
+db = MySQLDatabase(db_name, user=db_user, password=db_password, host=db_host)
 
 
-db =_mysql.connect(db_host,db_user,db_password,db_name)
 class Laptop_mapping:
     default_id = PrimaryKeyField(primary_key=True)
-    employee_id = ForeignKeyField(Employee, rerlated_name='mappings')
-    laptop_id = ForeignKeyField(Laptop, related_name='laptops')
-    issue_date = DateTimeField()
-    status_id = ForeignKeyField(Laptop_status, related_name='status')
+    employee_id = ForeignKeyField(Employee, rerlated_name='mappings', null=True)
+    laptop_id = ForeignKeyField(Laptop, related_name='laptops', null=True)
+    issue_date = DateTimeField(null=True)
+    status_id = ForeignKeyField(Laptop_Status, related_name='status', null=True)
+
+    
     class Meta:
         database = db
 
