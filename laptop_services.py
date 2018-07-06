@@ -21,7 +21,16 @@ def view_laptop_emp_details(laptop_id = None, emp_id = None):
     :return:
     """
     laptop_emps_objlist = []
-    if laptop_id:
+    if (laptop_id is not None) and (emp_id is not None):
+        try:
+            mapping_object = Laptop_mapping.select().where(Laptop_mapping.laptop_id == laptop_id &
+                                                           Laptop_mapping.employee_id == emp_id)
+            laptop_emps_objlist.extend(extract_laptop_emp_details(mapping_object.laptops, mapping_object.mappings))
+        except:
+            print("Something Went Wrong")
+            laptop_emps_objlist = None
+
+    elif (laptop_id is not None):
         try:
             mapping_object = Laptop_mapping.select().where(Laptop_mapping.laptop_id == laptop_id)
             laptop_emps_objlist.extend(extract_laptop_emp_details(mapping_object.laptops, mapping_object.mappings))
@@ -30,7 +39,7 @@ def view_laptop_emp_details(laptop_id = None, emp_id = None):
             print("Something Went Wrong")
             laptop_emps_objlist = None
 
-    elif emp_id:
+    elif (emp_id is not None):
         try:
             mapping_object = Laptop_mapping.select().where(Laptop_mapping.employee_id == emp_id)
             laptop_emps_objlist.extend(extract_laptop_emp_details(mapping_object.laptops, mapping_object.mappings))
