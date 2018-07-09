@@ -9,7 +9,9 @@ from properties import *
 from dto.laptops_emp_dto import Details
 import datetime
 
-db = MySQLDatabase("laptop", user = "root", password = "password")
+
+db = MySQLDatabase(db_name, user=db_user, password=db_password)
+
 
 def create_tables():
     with db:
@@ -90,7 +92,9 @@ def create_laptop_employee_map(employee_id, laptop_id, status_id):
     """
     try:
         mapping = Laptop_mapping(employee_id=employee_id, laptop_id=laptop_id, status_id=status_id, issue_date=datetime.date.now())
+        print("==================================")
         mapping.save()
+
     except:
         print("invalid parameters or all parameters not specified")
 
@@ -109,7 +113,6 @@ def add_employee_details(employee_id, employee_name, employee_team):
         employee_obj = Employee(employee_name=employee_name, employee_team=employee_team)
         print("")
         employee_obj.save()
-
 
 def add_laptop(laptop_id, ram, gpu, os, company, storage):
     
