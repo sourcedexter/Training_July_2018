@@ -1,18 +1,21 @@
 from peewee import *
 from flask import Flask
 from flask_cors import CORS
-from laptop import Laptop
-from employee import Employee
-from laptop_status import Laptop_Status
-from laptop_mapping import Laptop_mapping
+from entities.laptop import Laptop
+from entities.employee import Employee
+from entities.laptop_status import Laptop_Status
+from entities.laptop_mapping import Laptop_mapping
 from properties import *
-from laptops_emp_dto import Details
+from dto.laptops_emp_dto import Details
+import datetime
 
-db= MySQLDatabase(db_name, user = db_user, password = db_password)
+
+db = MySQLDatabase(db_name, user=db_user, password=db_password)
+
 
 def create_tables():
     with db:
-        db.create_tables([Laptop_Status, Laptop, Employee, Laptop_mapping], True)
+        db.create_tables([Laptop_Status, Laptop, Employee, Laptop_mapping])
 
 
 def view_laptop_emp_details(laptop_id = None, emp_id = None):
@@ -76,9 +79,6 @@ def extract_laptop_emp_details(laptop_details, employee_details):
 
         return object_list
 
-from laptop_mapping import Laptop_mapping
-import datetime
-
 
 def create_laptop_employee_map(employee_id, laptop_id, status_id):
     """
@@ -91,7 +91,9 @@ def create_laptop_employee_map(employee_id, laptop_id, status_id):
     """
     try:
         mapping = Laptop_mapping(employee_id=employee_id, laptop_id=laptop_id, status_id=status_id, issue_date=datetime.date.now())
+        print("==================================")
         mapping.save()
+
     except:
         print("invalid parameters or all parameters not specified")
 
@@ -109,7 +111,6 @@ def add_employee_details(employee_id, employee_name, employee_team):
     except DoesNotExist:
         employee_obj = Employee(employee_id=employee_id, employee_name=employee_name, employee_team=employee_team)
         employee_obj.save()
-
 
 def add_laptop(laptop_id, ram, gpu, os, company, storage):
     
