@@ -1,18 +1,19 @@
 from peewee import *
 from flask import Flask
 from flask_cors import CORS
-from laptop import Laptop
-from employee import Employee
-from laptop_status import Laptop_Status
-from laptop_mapping import Laptop_mapping
+from entities.laptop import Laptop
+from entities.employee import Employee
+from entities.laptop_status import Laptop_Status
+from entities.laptop_mapping import Laptop_mapping
 from properties import *
-from laptops_emp_dto import Details
+from dto.laptops_emp_dto import Details
+import datetime
 
 db= MySQLDatabase(db_name, user = db_user, password = db_password)
 
 def create_tables():
     with db:
-        db.create_tables([Laptop_Status, Laptop, Employee, Laptop_mapping], True)
+        db.create_tables([Laptop_Status, Laptop, Employee, Laptop_mapping])
 
 
 def view_laptop_emp_details(laptop_id = None, emp_id = None):
@@ -76,8 +77,7 @@ def extract_laptop_emp_details(laptop_details, employee_details):
 
         return object_list
 
-from laptop_mapping import Laptop_mapping
-import datetime
+
 
 
 def create_laptop_employee_map(employee_id, laptop_id, status_id):
@@ -107,24 +107,30 @@ def add_employee_details(employee_id, employee_name, employee_team):
     try:
         Employee.get_by_id(employee_id)
     except DoesNotExist:
-        employee_obj = Employee(employee_id=employee_id, employee_name=employee_name, employee_team=employee_team)
+        employee_obj = Employee(employee_name=employee_name, employee_team=employee_team)
         employee_obj.save()
 
 
-def add_laptop(laptop_id, ram, gpu, os, company, storage):
-    
-    
+def add_laptop(laptop_id, ram, os, company, storage):
     """
     adds laptop details to the Laptop table
     
     """
     try:
-        
-        lap_details=Laptop.create(laptop_id=laptop_id, ram=ram, gpu=gpu, os=os, company=company, storage=storage)
-        lap_details.save()
+        Laptop.get_by_id(laptop_id)
+    except DoesNotExist:
+
+        laptop_obj = Laptop(laptop_id=laptop_id,ram=ram, os=os, company=company, storage=storage)
+        laptop_obj.save()
     except:
-        print("laptop already exists")
-        
+        print(" general exception")
+    # try:
+    #
+    #     lap_details=Laptop.create(laptop_id=laptop_id, ram=ram, gpu=gpu, os=os, company=company, storage=storage)
+    #     lap_details.save(force_insert=True)
+    # except:
+    #     print("laptop already exists")
+    #
 
 
 def del_laptop(laptop_id):

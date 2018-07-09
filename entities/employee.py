@@ -5,7 +5,7 @@ from playhouse.db_url import connect
 
 from properties import *
 
-db= MySQLDatabase(db_name, user = db_user, password = db_password)
+db= MySQLDatabase(db_name, user=db_user, password=db_password)
 
 class Employee(Model):
     employee_id = PrimaryKeyField(primary_key=True)  # type: PrimaryKeyField
