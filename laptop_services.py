@@ -80,6 +80,7 @@ def extract_laptop_emp_details(laptop_details, employee_details):
         return object_list
 
 
+
 def create_laptop_employee_map(employee_id, laptop_id, status_id):
     """
     populate laptop_mapping table
@@ -109,7 +110,8 @@ def add_employee_details(employee_id, employee_name, employee_team):
     try:
         Employee.get_by_id(employee_id)
     except DoesNotExist:
-        employee_obj = Employee(employee_id=employee_id, employee_name=employee_name, employee_team=employee_team)
+        employee_obj = Employee(employee_name=employee_name, employee_team=employee_team)
+        print("")
         employee_obj.save()
 
 def add_laptop(laptop_id, ram, gpu, os, company, storage):
