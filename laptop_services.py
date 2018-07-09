@@ -121,7 +121,7 @@ def add_laptop(laptop_id, ram, gpu, os, company, storage):
     try:
         
         lap_details=Laptop.create(laptop_id=laptop_id, ram=ram, gpu=gpu, os=os, company=company, storage=storage)
-        lap_details.save()
+        lap_details.save(force_insert=True)
     except:
         print("laptop already exists")
         
