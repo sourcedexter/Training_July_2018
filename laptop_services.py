@@ -119,18 +119,10 @@ def add_laptop(laptop_id, ram, os, company, storage):
     try:
         Laptop.get_by_id(laptop_id)
     except DoesNotExist:
-
         laptop_obj = Laptop(laptop_id=laptop_id,ram=ram, os=os, company=company, storage=storage)
-        laptop_obj.save()
+        laptop_obj.save(force_insert=True)
     except:
         print(" general exception")
-    # try:
-    #
-    #     lap_details=Laptop.create(laptop_id=laptop_id, ram=ram, gpu=gpu, os=os, company=company, storage=storage)
-    #     lap_details.save(force_insert=True)
-    # except:
-    #     print("laptop already exists")
-    #
 
 
 def del_laptop(laptop_id):

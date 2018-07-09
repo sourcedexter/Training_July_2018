@@ -1,10 +1,6 @@
-from flask import Flask
-from flask_cors import CORS
 from flask import request
 from laptop_services import *
-import traceback
-import json
-import os
+
 
 
 app = Flask(__name__)
@@ -31,7 +27,6 @@ def laptop():
             status_code = 200
             return message, status_code
     except:
-        traceback.print_exc()
         status_code = 500
         message = "something wrong!!Sorry"
         return message, status_code
